@@ -254,7 +254,7 @@ function collectStar(player, star) {
       star.enableBody(true, star.x, 0, true, true);
     });
 
-    const x = (player.x < scene.game.canvas.width / 2) ?
+    const x = (player.x > scene.game.canvas.width / 2) ?
       Phaser.Math.Between(0, scene.game.canvas.width / 2) :
       Phaser.Math.Between(scene.game.canvas.width / 2, scene.game.canvas.width);
 
