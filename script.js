@@ -37,6 +37,8 @@ let canJump = false;
 let skor, skorText;
 let gameOverImage, winImage;
 let isGameOver = false, isGameWin = false;
+let btnLeft, btnRight, btnUp;
+let isLeftDown = false, isRightDown = false, isUpDown = false;
 
 
 function onPreload() {
@@ -62,6 +64,7 @@ function onPreload() {
   this.load.image('sky', baseURL + 'sky3.png');
   this.load.image('bomb', baseURL + 'bomb.png');
   this.load.image('gameOver', baseURL + 'gameOver.png');
+  this.load.image('button', baseURL + 'button.png');
 
 }
 
@@ -171,6 +174,7 @@ function onCreate() {
   // this.physics.add.overlap(player, stars, handleOverlap);
   this.physics.add.overlap(player, stars, collectStar);
   keyboard = this.input.keyboard.createCursorKeys();
+  addButtons(this); // add mobile control buttons
 }
 
 function handleOverlap(player, star) {
@@ -184,15 +188,15 @@ function onUpdate() {
   if (isGameOver) return;
   const isPlayerOnFloor = (player.body.touching.down || player.body.onFloor());
 
-  if (keyboard.up.isDown && isPlayerOnFloor) {
+  if ((keyboard.up.isDown || isUpDown) && isPlayerOnFloor) {
     player.setVelocityY(-600);
     player.anims.play('jumpUpx', true);
     scene.time.addEvent({
-      delay: 200,
+      delay: 400,
       callback: function () { canJump = true; },
     });
 
-  } else if (keyboard.up.isDown && canJump) {
+  } else if ((keyboard.up.isDown || isUpDown) && canJump) {
     player.setVelocityY(-600);
     player.anims.play('jumpUpx', true);
     canJump = false;
@@ -200,11 +204,11 @@ function onUpdate() {
     player.setVelocityY(600);
   }
 
-  else if (keyboard.left.isDown && isPlayerOnFloor) {
+  else if ((keyboard.left.isDown || isLeftDown) && isPlayerOnFloor) {
     player.setVelocityX(-200);
     player.setFlipX(true);
     player.anims.play('run', true);
-  } else if (keyboard.right.isDown && isPlayerOnFloor) {
+  } else if ((keyboard.right.isDown || isRightDown) && isPlayerOnFloor) {
     player.setVelocityX(200);
     player.setFlipX(false);
     player.anims.play('run', true);
@@ -272,4 +276,45 @@ document.addEventListener('keyup', function (e) {
 
   }
   console.log(e);
-})
+});
+
+
+function addButtons(scene) {
+  // width: 1366,
+  // height: 768,
+  btnRight = scene.add.image(1315, 700, 'button')
+    .setAlpha(.3);
+
+  btnLeft = scene.add.image(1145, 700, 'button')
+    .setRotation(180 * Math.PI / 180)
+    .setAlpha(.3);
+  btnUp = scene.add.image(80, 700, 'button')
+    .setAlpha(.3)
+    .setRotation(-90 * Math.PI / 180);
+
+  btnUp.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+    isUpDown = true;
+  });
+  btnUp.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    isUpDown = false;
+  });
+
+
+
+  btnLeft.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+    isLeftDown = true;
+  });
+  btnLeft.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    isLeftDown = false;
+  });
+
+
+  btnRight.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+    isRightDown = true;
+  });
+  btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    isRightDown = false;
+  });
+
+
+}
