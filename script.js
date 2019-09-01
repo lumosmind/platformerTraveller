@@ -37,7 +37,7 @@ let canJump = false;
 let skor, skorText;
 let gameOverImage, winImage;
 let isGameOver = false, isGameWin = false;
-let btnLeft, btnRight, btnUp;
+let mobileInput1, mobileInput2, mobileInput3;
 let isLeftDown = false, isRightDown = false, isUpDown = false;
 
 
@@ -301,20 +301,27 @@ function addButtons(scene) {
 
 
 
-  btnLeft.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-    isLeftDown = true;
-  });
-  btnLeft.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-    isLeftDown = false;
-  });
+  /*  btnLeft.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+     isLeftDown = true;
+   });
+   btnLeft.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+     isLeftDown = false;
+   });
+ 
+ 
+   btnRight.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+     isRightDown = true;
+   });
+   btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+     isRightDown = false;
+   }); */
+  scene.input.addPointer(3);
+  btnLeft = scene.input.pointer1;
+  btnRight = scene.input.pointer2;
+  btnUp = scene.input.pointer3;
 
+}
 
-  btnRight.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-    isRightDown = true;
-  });
-  btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-    isRightDown = false;
-  });
-
+function checkMobileButtons() {
 
 }
