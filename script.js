@@ -72,6 +72,7 @@ function onPreload() {
 
 function onCreate() {
   scene = this;
+  scene.input.addPointer(4);
   // set background image
   this.add.image(0, 0, 'sky').setOrigin(0, 0);
   gameOverImage = this.add.image(0, 0, 'gameOver').setOrigin(0, 0);
@@ -286,15 +287,16 @@ function addButtons(scene) {
   // width: 1366,
   // height: 768,
   //image yerine sprite yapmamızın sebebi getBounds() u çalıştırabilmemiz
-  btnRight = scene.add.sprite(1315, 700, 'button')
+  btnRight = scene.add.sprite(1290, 700, 'button')
     .setAlpha(.3);
 
-  btnLeft = scene.add.sprite(1145, 700, 'button')
+  btnLeft = scene.add.sprite(1125, 700, 'button')
     .setRotation(180 * Math.PI / 180)
     .setAlpha(.3);
   btnUp = scene.add.sprite(80, 700, 'button')
     .setAlpha(.3)
     .setRotation(-90 * Math.PI / 180);
+
 
   btnUp.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
     isUpDown = true;
@@ -321,35 +323,5 @@ function addButtons(scene) {
   });
 
 
-  /*   scene.input.addPointer(3);
-    mobileInput1 = scene.input.pointer1;
-    mobileInput2 = scene.input.pointer2;
-    mobileInput3 = scene.input.pointer3; */
-
 }
 
-function checkMobileButtons() {
-  btnLeft.getBounds().contains(1, 3)
-
-  if (mobileInput1.isDown) {
-    if (btnLeft.getBounds().contains(mobileInput1.x, mobileInput1.y)) isLeftDown = true;
-    if (btnRight.getBounds().contains(mobileInput1.x, mobileInput1.y)) isRightDown = true;
-    if (btnUp.getBounds().contains(mobileInput1.x, mobileInput1.y)) isUpDown = true;
-  }
-
-  if (mobileInput2.isDown) {
-    if (btnLeft.getBounds().contains(mobileInput2.x, mobileInput2.y)) isLeftDown = true;
-    if (btnRight.getBounds().contains(mobileInput2.x, mobileInput2.y)) isRightDown = true;
-    if (btnUp.getBounds().contains(mobileInput2.x, mobileInput2.y)) isUpDown = true;
-  }
-
-  if (mobileInput3.isDown) {
-    if (btnLeft.getBounds().contains(mobileInput3.x, mobileInput3.y)) isLeftDown = true;
-    if (btnRight.getBounds().contains(mobileInput3.x, mobileInput3.y)) isRightDown = true;
-    if (btnUp.getBounds().contains(mobileInput3.x, mobileInput3.y)) isUpDown = true;
-  }
-
-
-
-
-}
