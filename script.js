@@ -272,15 +272,19 @@ function collectStar(player, star) {
 }
 document.addEventListener('keyup', function (e) {
   if ((isGameOver || isGameWin) && e.code === 'Space') {
-    console.log("restart......");
-    game.scene.stop('default');
-    isGameOver = false;
-    isGameWin = false;
-    game.scene.start('default');
+    restartGame();
 
   }
   console.log(e);
 });
+
+function restartGame() {
+  console.log("restart......");
+  game.scene.stop('default');
+  isGameOver = false;
+  isGameWin = false;
+  game.scene.start('default');
+}
 
 
 function addButtons(scene) {
@@ -320,6 +324,13 @@ function addButtons(scene) {
   });
   btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
     isRightDown = false;
+  });
+
+  // gameOverImage.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+  //   isRightDown = true;
+  // });
+  gameOverImage.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    restartGame();
   });
 
 
