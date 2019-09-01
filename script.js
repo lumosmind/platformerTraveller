@@ -39,6 +39,7 @@ let gameOverImage, winImage;
 let isGameOver = false, isGameWin = false;
 let mobileInput1, mobileInput2, mobileInput3;
 let isLeftDown = false, isRightDown = false, isUpDown = false;
+let btnLeft, btnRight, btnUp;
 
 
 function onPreload() {
@@ -186,6 +187,7 @@ function handleOverlap(player, star) {
 
 function onUpdate() {
   if (isGameOver) return;
+  // checkMobileButtons();
   const isPlayerOnFloor = (player.body.touching.down || player.body.onFloor());
 
   if ((keyboard.up.isDown || isUpDown) && isPlayerOnFloor) {
@@ -222,6 +224,7 @@ function onUpdate() {
     this.physics.pause();
     winImage.setVisible(true);
   }
+
 
 
 }
@@ -282,13 +285,14 @@ document.addEventListener('keyup', function (e) {
 function addButtons(scene) {
   // width: 1366,
   // height: 768,
-  btnRight = scene.add.image(1315, 700, 'button')
+  //image yerine sprite yapmamızın sebebi getBounds() u çalıştırabilmemiz
+  btnRight = scene.add.sprite(1315, 700, 'button')
     .setAlpha(.3);
 
-  btnLeft = scene.add.image(1145, 700, 'button')
+  btnLeft = scene.add.sprite(1145, 700, 'button')
     .setRotation(180 * Math.PI / 180)
     .setAlpha(.3);
-  btnUp = scene.add.image(80, 700, 'button')
+  btnUp = scene.add.sprite(80, 700, 'button')
     .setAlpha(.3)
     .setRotation(-90 * Math.PI / 180);
 
@@ -301,27 +305,51 @@ function addButtons(scene) {
 
 
 
-  /*  btnLeft.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-     isLeftDown = true;
-   });
-   btnLeft.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-     isLeftDown = false;
-   });
- 
- 
-   btnRight.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
-     isRightDown = true;
-   });
-   btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
-     isRightDown = false;
-   }); */
-  scene.input.addPointer(3);
-  btnLeft = scene.input.pointer1;
-  btnRight = scene.input.pointer2;
-  btnUp = scene.input.pointer3;
+  btnLeft.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+    isLeftDown = true;
+  });
+  btnLeft.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    isLeftDown = false;
+  });
+
+
+  btnRight.setInteractive().on('pointerdown', function (pointer, localX, localY, event) {
+    isRightDown = true;
+  });
+  btnRight.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
+    isRightDown = false;
+  });
+
+
+  /*   scene.input.addPointer(3);
+    mobileInput1 = scene.input.pointer1;
+    mobileInput2 = scene.input.pointer2;
+    mobileInput3 = scene.input.pointer3; */
 
 }
 
 function checkMobileButtons() {
+  btnLeft.getBounds().contains(1, 3)
+
+  if (mobileInput1.isDown) {
+    if (btnLeft.getBounds().contains(mobileInput1.x, mobileInput1.y)) isLeftDown = true;
+    if (btnRight.getBounds().contains(mobileInput1.x, mobileInput1.y)) isRightDown = true;
+    if (btnUp.getBounds().contains(mobileInput1.x, mobileInput1.y)) isUpDown = true;
+  }
+
+  if (mobileInput2.isDown) {
+    if (btnLeft.getBounds().contains(mobileInput2.x, mobileInput2.y)) isLeftDown = true;
+    if (btnRight.getBounds().contains(mobileInput2.x, mobileInput2.y)) isRightDown = true;
+    if (btnUp.getBounds().contains(mobileInput2.x, mobileInput2.y)) isUpDown = true;
+  }
+
+  if (mobileInput3.isDown) {
+    if (btnLeft.getBounds().contains(mobileInput3.x, mobileInput3.y)) isLeftDown = true;
+    if (btnRight.getBounds().contains(mobileInput3.x, mobileInput3.y)) isRightDown = true;
+    if (btnUp.getBounds().contains(mobileInput3.x, mobileInput3.y)) isUpDown = true;
+  }
+
+
+
 
 }
